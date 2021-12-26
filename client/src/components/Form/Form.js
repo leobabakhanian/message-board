@@ -8,44 +8,53 @@ import { useSelector } from "react-redux";
 
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
-    author: "",
     title: "",
     message: "",
-    tags: "",
     selectedFile: "",
   });
   const post = useSelector((state) =>
-    currentId ? state.posts.find((p) => p._id === currentId) : null
+    currentId ? state.posts.find((message) => message._id === currentId) : null
   );
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (currentId) {
-      dispatch(updatePost(currentId, postData));
-    } else {
-      dispatch(createPost(postData));
-    }
-
-    clear();
-  };
-
   const clear = () => {
-    setCurrentId(null);
+    setCurrentId(0);
     setPostData({
-      author: "",
       title: "",
       message: "",
-      tags: "",
       selectedFile: "",
     });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (currentId === 0) {
+      dispatch(createPost({ ...postData, name: user?.result?.username }));
+      clear();
+    } else {
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.username })
+      );
+      clear();
+    }
+  };
+
+  if (!user?.result?.username) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please sign in to post a message.
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -56,16 +65,8 @@ const Form = ({ currentId, setCurrentId }) => {
         onSubmit={handleSubmit}
       >
         <Typography className={classes.header} variant="h6">
-          {currentId ? "Editing" : "Post a Message"}
+          {currentId ? `Editing "${post.title}"` : "Post a Message"}
         </Typography>
-        <TextField
-          name="author"
-          variant="outlined"
-          label="Your Name"
-          fullWidth
-          value={postData.author}
-          onChange={(e) => setPostData({ ...postData, author: e.target.value })}
-        />
         <TextField
           name="title"
           variant="outlined"

@@ -10,18 +10,45 @@ import {
 import LockIcon from "@mui/icons-material/Lock";
 import useStyles from "./styles";
 import Input from "./Input";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signin, signup } from "../../actions/auth";
+
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const Auth = () => {
-  const classes = useStyles();
-  const handleSubmit = () => {};
-  const handleChange = () => {};
-  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState(initialState);
   const [isSignUp, setIsSignUp] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const classes = useStyles();
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
+
   const switchMode = () => {
+    setFormData(initialState);
     setIsSignUp((prevIsSignUp) => !prevIsSignUp);
-    handleShowPassword(false);
+    setShowPassword(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -36,7 +63,7 @@ const Auth = () => {
             {isSignUp && (
               <>
                 <Input
-                  name="userName"
+                  name="username"
                   label="Username"
                   handleChange={handleChange}
                   autoFocus
@@ -76,7 +103,7 @@ const Auth = () => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Button className={classes.bottom} onClick={switchMode}>
+              <Button onClick={switchMode}>
                 {isSignUp
                   ? "Already have an account? Sign In"
                   : "Don't have an account? Sign Up"}

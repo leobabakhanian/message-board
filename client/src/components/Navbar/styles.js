@@ -1,5 +1,4 @@
 import { makeStyles } from "@mui/styles";
-import { deepPurple } from "@mui/material/colors";
 
 export default makeStyles((theme) => ({
   appBar: {
@@ -36,8 +35,10 @@ export default makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-  purple: {
-    color: deepPurple[500],
-    backgroundColor: deepPurple[500],
+  logout: {
+    background: "#b23b3b !important",
+  },
+  avatar: {
+    background: "purple !important",
   },
 }));

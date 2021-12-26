@@ -15,19 +15,14 @@ export default makeStyles((theme) => ({
   },
   avatar: {
     margin: 10,
-    backgroundColor: "#2074d4",
+    backgroundColor: "#2074d4 !important",
   },
   form: {
     width: "100%",
     marginTop: 30,
   },
   submit: {
-    marginTop: 20,
-  },
-  googleButton: {
-    marginBottom: 20,
-  },
-  bottom: {
-    marginTop: 10,
+    marginTop: "15px !important",
+    marginBottom: "15px !important",
   },
 }));
