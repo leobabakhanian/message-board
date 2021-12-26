@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://message-board-proj.herokuapp.com/",
+  baseURL: "https://message-board-login.herokuapp.com/",
 });
 
 API.interceptors.request.use((req) => {
