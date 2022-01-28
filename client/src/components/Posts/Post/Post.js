@@ -22,7 +22,7 @@ const Post = ({ post, setCurrentId }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const Likes = () => {
-    if (post.likes.length > 0) {
+    if (post.likes && post.likes.length > 0) {
       return post.likes.find((like) => like === user?.result?._id) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
