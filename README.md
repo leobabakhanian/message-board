@@ -1,5 +1,5 @@
 # message-board
-A full-stack MERN web app that allows users to register, log-in, and post to a message board.
+A full-stack MERN web app that allows users to register, log in, and post to a message board.
 
 ## Dependencies
 
